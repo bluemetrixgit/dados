@@ -72,30 +72,30 @@ class Taxa_de_gestao_streamlit():
                 type=['xlsx'],
                 key='upload_pl'
             )
-            try:
-                if planilha_de_controle_uploaded and pl_uploaded:
-                    dados_btg = calculadora.calculando_tx_gestao_BTG(planilha_de_controle_uploaded, pl_uploaded)
+            # try:
+            if planilha_de_controle_uploaded and pl_uploaded:
+                dados_btg = calculadora.calculando_tx_gestao_BTG(planilha_de_controle_uploaded, pl_uploaded)
 
 
-                if dados_btg is not None:
+            if dados_btg is not None:
 
-                    output4 = io.BytesIO()
-                    with pd.ExcelWriter(output4, engine='xlsxwriter') as writer:
-                        dados_btg.to_excel(writer,sheet_name='BTG', index=False)
-                    output4.seek(0)
-                    st.download_button(data=output4,file_name=f'BTG___{dia_e_hora}.xlsx',key='download_button',label='Download')        
-            
-                if st.button(f'Armazenar taxa de gestao BTG:   {dia_e_hora}',key='botao_btg'):
-                    try:
-                        registrar_dados_no_Mysql(dados_btg)
-                        st.success('Taxa registrada!')
-                    except:
-                        st.warning('Erro no registro ')
-                if st.button(f'Ver tabela BTG:  {dia_e_hora}'):
+                output4 = io.BytesIO()
+                with pd.ExcelWriter(output4, engine='xlsxwriter') as writer:
+                    dados_btg.to_excel(writer,sheet_name='BTG', index=False)
+                output4.seek(0)
+                st.download_button(data=output4,file_name=f'BTG___{dia_e_hora}.xlsx',key='download_button',label='Download')        
+        
+            if st.button(f'Armazenar taxa de gestao BTG:   {dia_e_hora}',key='botao_btg'):
+                try:
+                    registrar_dados_no_Mysql(dados_btg)
+                    st.success('Taxa registrada!')
+                except:
+                    st.warning('Erro no registro ')
+            if st.button(f'Ver tabela BTG:  {dia_e_hora}'):
 
-                    st.dataframe(dados_btg)          
-            except:
-                pass
+                st.dataframe(dados_btg)          
+            # except:
+            #     pass
 
 
 

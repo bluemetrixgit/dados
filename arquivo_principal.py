@@ -3,7 +3,7 @@ import numpy as np
 import streamlit as st
 from dashboard import main
 from contas_desenquadradas import projetobackoffice2,guide
-from taxa_de_gestao import stramlit_visualizacao
+from taxa_de_gestao import stramlit_visualizacao,calculando_gestao_btg_full
 
 
 
