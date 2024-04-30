@@ -54,7 +54,7 @@ class CalculandoTaxadeGestao():
         selecionar_data = st.date_input('Data')
         tx_gestao['Data'] = selecionar_data
         tx_gestao['Tx_Gestão_Diaria'] = ((tx_gestao['Taxa_de_Gestão']+1)**calculo_diario-1)*100
-        tx_gestao['Valor_de_cobrança'] = tx_gestao['VALOR']*(tx_gestao['Tx_Gestão_Diaria'])/100
+        tx_gestao['Valor_de_cobrança'] = round(tx_gestao['VALOR']*(tx_gestao['Tx_Gestão_Diaria'])/100,2)
         tx_gestao = tx_gestao.dropna(subset=['conta'])
         return tx_gestao
 
