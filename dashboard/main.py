@@ -8,6 +8,9 @@ from datetime import datetime,timedelta
 import openpyxl
 
 
+
+
+
 class Dashboard():
     def __init__(self):
         print('hello')
@@ -24,32 +27,31 @@ class Dashboard():
         agora = le_excel(r'Controle de Contratos - Atualizado Fevereiro de 2024 (3).xlsx',5)
         orama = le_excel(r'Controle de Contratos - Atualizado Fevereiro de 2024 (3).xlsx',6)
         novas = le_excel(r'Controle de Contratos - Atualizado Fevereiro de 2024 (3).xlsx',7)
-
-        ###########
-
+        co_admin = pd.read_excel(r'Controle de Contratos - Carteiras Co-Administradas.xlsx',1,skiprows=1).iloc[:-5,:]
 
 
         ###########
         # renomeando colunas periodo de 2023
         # ##########
-
+        lista_core0=[btg,guide,genial,agora,orama,co_admin]
         lista_core = [btg,guide,genial,agora,orama]
         lista_core2 = [guide,genial]
 
-        
-        for corretora in lista_core:
+
+
+        for corretora in lista_core0:
             nome_ultima_col = corretora.columns[-1]
 
             novo_nome = 'Março/2024'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
-        for corretora in lista_core:
+        for corretora in lista_core0:
             nome_ultima_col = corretora.columns[-2]
 
             novo_nome = 'Fevereiro/2024'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
-        for corretora in lista_core:
+        for corretora in lista_core0:
             nome_ultima_col = corretora.columns[-3]
 
             novo_nome = 'Janeiro/2024'
@@ -573,9 +575,24 @@ class Dashboard():
         for corretora in lista_core:
             corretora = corretora.iloc[1:-5]
 
+            ['index', 'Corretora', 'Nome_cliente', 'Conta', 'Escritorio', 'UF',
+       'Assessor', 'Mesa de Operação', 'Status', 'Exeção', 'Inicio da gestão',
+       'Data do distrato', 'Carteira', 'Taxa de gestão', 'Benchmark',
+       'Taxa de performance', 'Unnamed: 23', 'Unnamed: 28', 'Unnamed: 29',
+       'Unnamed: 30']
+            
+        co_admin =co_admin.rename(columns={                
+            'Cliente':'Nome_cliente',
+            'Escritório':'Escritorio',
+            'Operador':'Mesa de Operação',
+            'Início da Gestão':'Inicio da gestão',
+            'Data distrato':'Data do distrato',
+            'Taxa de Gestão':'Taxa de gestão',
+            'Benchmark TX. Perf':'Benchmark',
+            'TX. Perf.':'Taxa de performance'})
 
-
-        arquivo_final = pd.concat([btg,guide,genial,agora,orama]).reset_index()
+        
+        arquivo_final = pd.concat([btg,guide,genial,agora,orama,co_admin]).reset_index()
 
         arquivo_final.drop(columns=['index'],inplace=True)
         arquivo_final.drop(988,inplace=True)
@@ -652,6 +669,21 @@ class Dashboard():
             'Retiradas':'Retiradas em Fevereiro_2024'
         })
 
+        aporte_e_retiradas_Marco_2024 = pd.read_excel('Aportes e Retiradas Março.xlsx')
+        aporte_e_retiradas_Marco_2024 = aporte_e_retiradas_Marco_2024.rename(columns={
+            'Conta':'Conta_março_2024',
+            'Aportes':'Aportes em Março 2024',
+            'Retiradas':'Retiradas em Março 2024'
+        })
+
+        aporte_e_retiradas_abril_2024 = pd.read_excel('Aportes e Retiradas Abril.xlsx')
+        aporte_e_retiradas_abril_2024 = aporte_e_retiradas_abril_2024.rename(columns={
+            'Conta':'Conta_abril_2024',
+            'Aportes':'Aportes em Abril 2024',
+            'Retiradas':'Retiradas em Abril 2024'
+        }).drop(columns='Nome')
+
+        
 
         arquivo_final = arquivo_final.merge(aporte_e_retiradas_Novembro_2023,left_on='Conta',right_on='Conta_Novembro_2023',how='outer').reset_index()
         arquivo_final = arquivo_final[['Corretora', 'Nome_cliente', 'Conta', 'Escritorio', 'UF', 'Assessor',
@@ -673,14 +705,19 @@ class Dashboard():
 
 
         arquivo_final = arquivo_final.merge(aporte_e_retiradas_Dezembro_2023,left_on='Conta',right_on='Conta_Dezembro_2023',how='outer').merge(
-            aporte_e_retiradas_Janeiro2024,left_on='Conta',right_on='Conta_janeiro_2024',how='outer').merge(aporte_e_retiradas_Fevereiro_2024,left_on='Conta',right_on='Conta_fevereiro_2024',how='outer').reset_index()
+            aporte_e_retiradas_Janeiro2024,left_on='Conta',right_on='Conta_janeiro_2024',how='outer').merge(
+                aporte_e_retiradas_Fevereiro_2024,left_on='Conta',right_on='Conta_fevereiro_2024',how='outer').merge(
+                aporte_e_retiradas_Marco_2024,left_on='Conta',right_on='Conta_março_2024',how='outer').merge(
+                aporte_e_retiradas_abril_2024,left_on='Conta',right_on='Conta_abril_2024',how='outer').reset_index()
 
 
         arquivo_final = arquivo_final[['Corretora', 'Nome_cliente', 'Conta', 'Escritorio', 'UF', 'Assessor',
             'Mesa de Operação', 'Status', 'Exeção', 'Inicio da gestão',
             'Data do distrato', 'Carteira', 'Taxa de gestão', 'Benchmark',
-            'Taxa de performance','Aportes em Novembro 2023','Aportes em Dezembro 2023','Aportes em Janeiro_2024','Aportes em Fevereiro_2024',
-            'Retiradas em Novembro 2023', 'Retiradas em Dezembro 2023','Retiradas em Janeiro_2024','Retiradas em Fevereiro_2024','Janeiro/2020', 'fereiro/2020', 'Março/2020',
+            'Taxa de performance','Aportes em Março 2024','Retiradas em Março 2024',
+            'Aportes em Novembro 2023','Aportes em Dezembro 2023','Aportes em Janeiro_2024','Aportes em Fevereiro_2024',
+            'Retiradas em Novembro 2023', 'Retiradas em Dezembro 2023','Retiradas em Janeiro_2024','Retiradas em Fevereiro_2024',
+            'Janeiro/2020', 'fereiro/2020', 'Março/2020',
             'Abril/2020', 'Maio/2020', 'junho/2020', 'julho/2020', 'Agosto/2020',
             'Setembro/2020', 'Outubro/2020', 'Novembro/2020', 'Dezembro/2020',
             'Janeiro/2021', 'fereiro/2021', 'Março/2021', 'Abril/2021', 'Maio/2021',
@@ -809,7 +846,8 @@ class Dashboard():
                 grafico_indicador_de_pl.update_layout(title=dict(text='PL Total',
                                                                 font=dict(size=40),
                                                                 x=0.3,
-                                                                y=0.9))
+                                                                y=0.9),
+                                                                paper_bgcolor='rgba(0,0,0,0)')
                 
                 cahart_json_str = grafico_indicador_de_pl.to_json()
                 cleaned_html = cahart_json_str[1:-1].replace("'","")
@@ -846,11 +884,13 @@ class Dashboard():
                         mode='lines',
                         
                     ))
-                    comparacao_pl_ao_longo_do_tempo.update_layout(
+                    comparacao_pl_ao_longo_do_tempo.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                                                     plot_bgcolor='rgba(0,0,0,0)',
                     title=dict(text='Evolução Bluemetrix ao Longo do tempo',
                                                                 font=dict(size=20),
                                                                 x=0.2,
                                                                 y=0.9),
+                                                         
                     showlegend=False,
                     legend_title='Assessor',
                     height=500,
@@ -881,7 +921,8 @@ class Dashboard():
                         mode='lines',
                         name=assessor,
                     ))
-                    captacao_dos_assessores.update_layout(
+                    captacao_dos_assessores.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                                                     plot_bgcolor='rgba(0,0,0,0)',
                     title=dict(text='Evolução PL dos Assessores ao longo do tempo',
                                                                 font=dict(size=20),
                                                                 x=0.1,
@@ -912,7 +953,8 @@ class Dashboard():
                                                                     
 
                                                                         )])
-                clientes_por_operador.update_layout(title=dict(text='Contas operadas por operador',
+                clientes_por_operador.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                                                     plot_bgcolor='rgba(0,0,0,0)',title=dict(text='Contas operadas por operador',
                                                                 font=dict(size=30),
                                                                 x=0.1,
                                                                 y=0.9))
@@ -928,7 +970,9 @@ class Dashboard():
                                                                     
 
                                                                         )])
-                grafico_pl_por_operador.update_layout(title=dict(text='PL por operador',
+                grafico_pl_por_operador.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                                                     plot_bgcolor='rgba(0,0,0,0)',
+                                                     title=dict(text='PL por operador',
                                                                 font=dict(size=30),
                                                                 x=0.2,
                                                                 y=0.9))
@@ -951,7 +995,8 @@ class Dashboard():
                         mode='lines',
                         name=assessor,
                     ))
-                    escritorios_pl.update_layout(
+                    escritorios_pl.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                                                     plot_bgcolor='rgba(0,0,0,0)',
                     title=dict(text='Evolução PL dos Escritorios ao longo do tempo',
                                                                 font=dict(size=20),
                                                                 x=0.1,
@@ -997,16 +1042,10 @@ class Dashboard():
 
 
                 st.metric(label='',value=f' Entrada de clientes :  {contando_entrada_de_cliente_pelo_periodo}')
-                # grafico_indicador_de_entrada_de_clientes = go.Figure(data=[go.Indicator(
-                #        value= contando_entrada_de_cliente_pelo_periodo,
-                #        title = {'text': '<br><span style="font-size:0.8em;color:#FFEFD5">A quantidade de clientes que iniciou a gestão e de :</span><br><span style="font-size:0.8em;color:#4682B4"></span>'}
-                # )])
 
-
-                #st.plotly_chart(grafico_indicador_de_entrada_de_clientes,use_container_width=True)
-
-
-                lista_aportes = ['Aportes em Novembro 2023','Aportes em Dezembro 2023','Aportes em Janeiro_2024','Aportes em Fevereiro_2024']
+                lista_aportes = ['Aportes em Novembro 2023','Aportes em Dezembro 2023','Aportes em Janeiro_2024',
+                                 'Aportes em Fevereiro_2024','Aportes em Março 2024','Aportes em Abril 2024',]
+                
                 st.markdown("<br>", unsafe_allow_html=True)
                 seletor_periodo_aportes = st.selectbox('',lista_aportes,key='Seletor_periodo_aportes')
                 valor_total_aportes = dataframe_filtrado[seletor_periodo_aportes].sum()
@@ -1022,7 +1061,9 @@ class Dashboard():
                                                         y=pl_assessores[mes_escolhido_de_valores_para_contas],
                                                         marker_color=RdBu,
                                                                         )])
-                grafico_pl_assessores.update_layout(title=dict(text='PL Assessores por periodo',
+                grafico_pl_assessores.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                                                     plot_bgcolor='rgba(0,0,0,0)',
+                                                     title=dict(text='PL Assessores por periodo',
                                                                 font=dict(size=30),
                                                                 x=0.2,
                                                                 y=0.9),
@@ -1055,7 +1096,8 @@ class Dashboard():
                         mode='lines',
                         name=Corretora
                     ))
-                comparacao_corretora.update_layout(
+                comparacao_corretora.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                                                     plot_bgcolor='rgba(0,0,0,0)',
                 title='Evolução dos Valores por Corretora ao Longo do Tempo',
                 showlegend=True,
                 height=500,
@@ -1076,7 +1118,9 @@ class Dashboard():
                                                         marker_color=cores_sofisticadas_5,
                                                         orientation='h'
                                                                         )])
-                grafico_status.update_layout(title=dict(text='Status das contas',
+                grafico_status.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                                                     plot_bgcolor='rgba(0,0,0,0)',
+                                                     title=dict(text='Status das contas',
                                                                 font=dict(size=30),
                                                                 x=0.2,
                                                                 y=0.9))
@@ -1099,7 +1143,8 @@ class Dashboard():
                         mode='lines',
                         name=assessor,
                     ))
-                    estado_pl.update_layout(
+                    estado_pl.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                                                     plot_bgcolor='rgba(0,0,0,0)',
                     title=dict(text='Evolução PL das Regiões ao longo do tempo',
                                                                 font=dict(size=20),
                                                                 x=0.1,
@@ -1151,18 +1196,14 @@ class Dashboard():
                     filtrando_dados_por_periodo_distrato = (dataframe_filtrado['Data do distrato'] >= start_date) & (dataframe_filtrado['Data do distrato'] <= end_date)
                     contando_entrada_de_cliente_pelo_periodo_distrato= filtrando_dados_por_periodo_distrato.sum()
                 
-                    # grafico_indicador_de_saida_de_clientes = go.Figure(data=[go.Indicator(
-                    #     value= contando_entrada_de_cliente_pelo_periodo_distrato,
-                    #     title = {'text': '<br><span style="font-size:0.8em;color:#FFEFD5">A quantidade de clientes que encerrou a gestão e de :</span><br><span style="font-size:0.8em;color:#4682B4"></span>'}
-                    # )])
-
-                    # st.plotly_chart(grafico_indicador_de_saida_de_clientes,use_container_width=True)
                     st.metric(label='',value=f' Saída de clientes :  {contando_entrada_de_cliente_pelo_periodo_distrato}')
                 except:
                     st.write('Não ouve saida de clientes para essa filtragem')
 
 
-                lista_resgates = ['Retiradas em Novembro 2023', 'Retiradas em Dezembro 2023','Retiradas em Janeiro_2024','Retiradas em Fevereiro_2024']
+                lista_resgates = ['Retiradas em Novembro 2023', 'Retiradas em Dezembro 2023',
+                                  'Retiradas em Janeiro_2024','Retiradas em Fevereiro_2024',
+                                  'Retiradas em Março 2024','Retiradas em Abril 2024']
                 st.markdown("<br>", unsafe_allow_html=True)
                 seletor_periodo_resgates = st.selectbox('',lista_resgates,key='Seletor_periodo_resgates')
                 valor_total_resgates = dataframe_filtrado[seletor_periodo_resgates].sum()
@@ -1177,7 +1218,9 @@ class Dashboard():
                                                         y=pl_assessores_atual['Outubro/2023'],
                                                         marker_color=Blues,
                                                                         )])
-                grafico_pl_assessores_atual.update_layout(title=dict(text='Top 10 PL Assessores Outubro/2023',
+                grafico_pl_assessores_atual.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                                                     plot_bgcolor='rgba(0,0,0,0)',
+                                                     title=dict(text='Top 10 PL Assessores Outubro/2023',
                                                                 font=dict(size=20),
                                                                 x=0.2,
                                                                 y=0.9),
@@ -1196,7 +1239,9 @@ class Dashboard():
                                                                     y=contagem_de_perfis['count'],
                                                                     marker_color='indianred',
                                                                         )])
-                grafico_barras_perfil_de_carteira.update_layout(title=dict(text='Perfil de carteiras',
+                grafico_barras_perfil_de_carteira.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                                                     plot_bgcolor='rgba(0,0,0,0)',
+                                                     title=dict(text='Perfil de carteiras',
                                                             font=dict(size=40),
                                                             x=0.3,
                                                             y=0.9))
@@ -1209,7 +1254,9 @@ class Dashboard():
                                                         marker_color=sunflowers_colors,
                                                         orientation='h'
                                                                         )])
-                grafico_pl_corretoras.update_layout(title=dict(text='PL por Corretora',
+                grafico_pl_corretoras.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                                                     plot_bgcolor='rgba(0,0,0,0)',
+                                                     title=dict(text='PL por Corretora',
                                                                 font=dict(size=30),
                                                                 x=0.2,
                                                                 y=0.9))
@@ -1223,7 +1270,9 @@ class Dashboard():
                                                         y=pl__escritorios[mes_escolhido_de_valores_para_contas],
                                                         marker_color=cores_sofisticadas_2,
                                                                         )])
-                pl_estado_barras.update_layout(title=dict(text='Património dos Escritorios',
+                pl_estado_barras.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                                                     plot_bgcolor='rgba(0,0,0,0)',
+                                                     title=dict(text='Património dos Escritorios',
                                                                 font=dict(size=30),
                                                                 x=0.2,
                                                                 y=0.9,

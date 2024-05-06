@@ -47,11 +47,16 @@ class CalculandoTaxadeGestao():
 
         self.planilha_controle['Conta'] = self.planilha_controle['Conta'].astype(str).str[:-2].map(lambda x: '00'+x)
         self.planilha_controle = self.planilha_controle[['Conta','Taxa de Gestão']]
+        self.planilha_controle = self.planilha_controle[self.planilha_controle['Conta'] == '00827730']
+        self.pl = self.pl[self.pl['Conta']== '00827730']
 
+        st.dataframe(self.planilha_controle)
+        st.dataframe(self.pl)
         self.planilha_controle.rename(columns={'Taxa de Gestão':'Taxa_de_Gestão','Conta':'conta'},inplace=True)
         tx_gestao = pd.merge(self.planilha_controle,self.pl, left_on='conta',right_on='Conta',how='outer')
         tx_gestao = tx_gestao[['conta','Taxa_de_Gestão','Valor']].rename(columns={'Valor':'VALOR'})
         selecionar_data = st.date_input('Data')
+
         tx_gestao['Data'] = selecionar_data
         tx_gestao['Tx_Gestão_Diaria'] = ((tx_gestao['Taxa_de_Gestão']+1)**calculo_diario-1)*100
         tx_gestao['Valor_de_cobrança'] = round(tx_gestao['VALOR']*(tx_gestao['Tx_Gestão_Diaria'])/100,2)
@@ -87,7 +92,7 @@ class CalculandoTaxadeGestao():
         selecionar_data = st.date_input('Data')
         tx_gestao['Data'] = selecionar_data
         tx_gestao['Tx_Gestão_Diaria'] = ((tx_gestao['Taxa_de_Gestão']+1)**calculo_diario-1)*100
-        tx_gestao[f'Valor_de_cobrança'] = tx_gestao['VALOR']*(tx_gestao['Tx_Gestão_Diaria'])/100   
+        tx_gestao[f'Valor_de_cobrança'] = round(tx_gestao['VALOR']*(tx_gestao['Tx_Gestão_Diaria'])/100,2)   
         
         return tx_gestao
 
@@ -180,7 +185,7 @@ class CalculandoTaxadeGestao():
         selecionar_data = st.date_input('Data')
         tx_gestao['Data'] = selecionar_data
         tx_gestao['Tx_Gestão_Diaria'] = ((tx_gestao['Taxa_de_Gestão']+1)**calculo_diario-1)*100
-        tx_gestao[f'Valor_de_cobrança'] = tx_gestao['VALOR']*(tx_gestao['Tx_Gestão_Diaria'])/100   
+        tx_gestao[f'Valor_de_cobrança'] = round(tx_gestao['VALOR']*(tx_gestao['Tx_Gestão_Diaria'])/100,2)   
         tx_gestao = tx_gestao.iloc[:,[3,4,1,5,6,7]]
         return tx_gestao
 
