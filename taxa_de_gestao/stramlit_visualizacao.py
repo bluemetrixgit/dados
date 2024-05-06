@@ -23,6 +23,7 @@ import mysql.connector
 import os
 from sqlalchemy.engine import URL
 from taxa_de_gestao.calculando_gestao_btg_full import CalculandoTaxadeGestao
+import mysql.connector
 # print('*'*50)
 
 

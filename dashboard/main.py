@@ -822,7 +822,8 @@ class Dashboard():
                 'julho/2022', 'Agosto/2022', 'Setembro/2022', 'Outubro/2022',
                 'Novembro/2022', 'Dezembro/2022', 'Janeiro/2023', 'fereiro/2023',
                 'Março/2023', 'Abril/2023', 'Maio/2023', 'junho/2023', 'julho/2023',
-                'Agosto/2023', 'Setembro/2023', 'Outubro/2023']
+                'Agosto/2023', 'Setembro/2023', 'Outubro/2023','Novembro/2023','Dezembro/2023','Janeiro/2024','Fevereiro/2024','Março/2024']
+            
             with col1:
                 
 
@@ -858,8 +859,7 @@ class Dashboard():
                                 use_container_width=True)
 
                 var_percentual = ((dataframe_filtrado.iloc[:, -2].sum() - dataframe_filtrado[mes_escolhido_de_valores_para_contas].sum())/dataframe_filtrado[mes_escolhido_de_valores_para_contas].sum())*100
-                #var_percentual = ((dataframe_filtrado[mes_escolhido_de_valores_para_contas].sum() - dataframe_filtrado.iloc[:, -2].sum()) / abs(dataframe_filtrado.iloc[:, -2].sum())) * 100
-
+        
                 st.metric(label=f'A variação do mês selecionado para o período atual para e de {var_percentual:,.2f}%',
                         value=f' Mês atual : R${dataframe_filtrado.iloc[:,-2].sum():,.2f}',
                         delta=f'Património período selecionado : R${dataframe_filtrado[mes_escolhido_de_valores_para_contas].sum():,.2f}')
@@ -912,7 +912,7 @@ class Dashboard():
                 base_de_dados_para_grafico_de_linhas_pl_assessores2 = base_de_dados_para_grafico_de_linhas_pl_assessores.groupby('Assessor')[colunas_to_numeric].sum().reset_index().nlargest(10,colunas_to_numeric[-1])
                 base_de_dados_melted = base_de_dados_para_grafico_de_linhas_pl_assessores2.melt(id_vars=['Assessor'], var_name='Data', value_name='Valor')
 
-                
+
                 captacao_dos_assessores = go.Figure()
                 for assessor, dados in base_de_dados_melted.groupby('Assessor'):
                     captacao_dos_assessores.add_trace(go.Scatter(
