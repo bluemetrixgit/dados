@@ -1,14 +1,10 @@
-dash==2.14.1
 gunicorn==21.2.0
 mysql_connector_repackaged==0.3.1
 numpy==1.26.4
 openpyxl==3.1.2
-pandas==2.2.1
+pandas==2.2.2
 plotly==5.17.0
 python-dotenv==1.0.1
 SQLAlchemy==2.0.25
 streamlit==1.29.0
 XlsxWriter==3.1.9
-mysql-connector-python==8.2.0
-PyMySQL==1.1.0
-gunicorn==21.2.0
