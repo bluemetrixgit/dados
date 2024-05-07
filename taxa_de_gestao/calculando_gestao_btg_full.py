@@ -89,11 +89,7 @@ class CalculandoTaxadeGestao():
                                                                                                          'Taxa de Gestão':'Taxa_de_Gestão'}).reset_index(drop='index')
         selecionar_data = st.date_input('Data')
 
- 
-
         self.guide_pl = self.guide_pl[self.guide_pl['Conta']=='441042']
-
-
 
         tx_gestao['Data'] = selecionar_data
         tx_gestao['Tx_Gestão_Diaria'] = ((tx_gestao['Taxa_de_Gestão']+1)**calculo_diario-1)*100
@@ -124,9 +120,10 @@ class CalculandoTaxadeGestao():
 
 
 
-        bovespa_vista_start = self.pl_agora[self.pl_agora['Gestora'] == 'BOVESPA A VISTA'].index[0]
+        bovespa_vista_start = self.pl_agora[self.pl_agora == 'BOVESPA A VISTA'].index[0]
         bovespa_vista_end = self.pl_agora[self.pl_agora['Gestora'] == 'BOVESPA OPC'].index[0]
         bovespa_vista_data = self.pl_agora.iloc[bovespa_vista_start :bovespa_vista_end].iloc[:-5]
+    
 
         #tesouro_direto_start = pl_agora[pl_agora['Unnamed: 2'] == 'Codigo Cliente'].index[0]#.searchsorted(0)[0]
         tesouro_direto_start = self.pl_agora[self.pl_agora['Gestora']=='BMF'].index[-1]
@@ -145,6 +142,7 @@ class CalculandoTaxadeGestao():
         garantias_end = self.pl_agora.shape[0]
         garantias_data = self.pl_agora.iloc[garantias_start:garantias_end]
 
+        bovespa_vista_data = bovespa_vista_data.iloc[9:,:]
         bovespa_vista_data['Valor_pl'] = bovespa_vista_data['Unnamed: 12']*bovespa_vista_data['Unnamed: 13']
 
         bovespa_vista_data_agregado = bovespa_vista_data.groupby('Unnamed: 4')['Valor_pl'].sum().reset_index().rename(columns={'Unnamed: 4':'BLUEMETRIX'})
@@ -178,8 +176,11 @@ class CalculandoTaxadeGestao():
             'OTAVIO ALVES FORTE':'Otávio Alves Forte',
             'SERGIO LINCOLN DE MATOS ARRUDA':'Sergio Lincoln de Matos Arruda',
             'SILEDE SATYRO DE SA RIBEIRO':'Silede Satyro de Sá Ribeiro',
-            'J & M CONSULTORIA EMPRESARIAL LTDA':'J & M Consultoria Empresarial LTDA  '    
+            'J & M CONSULTORIA EMPRESARIAL LTDA':'J & M Consultoria Empresarial LTDA  ',
+            'LUIS FERNANDO LEITE SABINO DE OLIVEIRA':"Luis Fernando Leite Sabino de Oliveira",
+            'JUAREZ MARIANO MACHADO':'Juarez Mariano Machado'
         }
+
         tx_gestao['BLUEMETRIX'] = tx_gestao['BLUEMETRIX'].replace(arrumar_Clientes)
         colunas_numericas = tx_gestao.select_dtypes(include=[np.number])
         tx_gestao['VALOR'] = round(colunas_numericas.sum(axis=1),2)
