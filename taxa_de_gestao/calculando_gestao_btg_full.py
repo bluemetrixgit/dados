@@ -79,6 +79,8 @@ class CalculandoTaxadeGestao():
         dia_e_hora = datetime.datetime.now().strftime("%Y-%m-%d")
 
         self.planilha_controle = self.planilha_controle[['Conta','Taxa de Gestão']]
+        self.planilha_controle['Conta'] = self.planilha_controle['Conta'].astype(str) 
+
         self.guide_pl = self.guide_pl[['CLIE_ID','SALDO_BRUTO']].rename(columns={'CLIE_ID':'Conta','SALDO_BRUTO':'VALOR'})
         self.guide_pl = self.guide_pl.groupby('Conta')['VALOR'].sum().reset_index()
         self.guide_pl['Conta'] = self.guide_pl['Conta'].astype(str)
@@ -86,9 +88,16 @@ class CalculandoTaxadeGestao():
         tx_gestao = pd.merge(self.planilha_controle,self.guide_pl,on='Conta',how='outer').dropna().rename(columns={'Conta':'conta',
                                                                                                          'Taxa de Gestão':'Taxa_de_Gestão'}).reset_index(drop='index')
         selecionar_data = st.date_input('Data')
+
+ 
+
+        self.guide_pl = self.guide_pl[self.guide_pl['Conta']=='441042']
+
+
+
         tx_gestao['Data'] = selecionar_data
         tx_gestao['Tx_Gestão_Diaria'] = ((tx_gestao['Taxa_de_Gestão']+1)**calculo_diario-1)*100
-        tx_gestao[f'Valor_de_cobrança'] = round(tx_gestao['VALOR']*(tx_gestao['Tx_Gestão_Diaria'])/100,2)   
+        tx_gestao[f'Valor_de_cobrança'] =tx_gestao['VALOR']*(tx_gestao['Tx_Gestão_Diaria'])/100   
         
         return tx_gestao
 

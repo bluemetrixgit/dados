@@ -112,30 +112,30 @@ class Taxa_de_gestao_streamlit():
                 type=['xlsx'],
                 key='upload_pl_guide'
             )
-            try:
+            #try:
                 
                     
-                if planilha_de_controle_uploaded and pl_uploaded:
-                    dados_guide = calculadora.calculando_tx_gestao_GUIDE(planilha_de_controle_uploaded, pl_uploaded)
-                
-                if dados_guide is not None:
+            if planilha_de_controle_uploaded and pl_uploaded:
+                dados_guide = calculadora.calculando_tx_gestao_GUIDE(planilha_de_controle_uploaded, pl_uploaded)
+            
+            if dados_guide is not None:
 
-                    output5 = io.BytesIO()
-                    with pd.ExcelWriter(output5, engine='xlsxwriter') as writer:
-                        dados_guide.to_excel(writer,sheet_name='Guide', index=False)
-                    output5.seek(0)
-                    st.download_button(data=output5,file_name=f'GUIDE___{dia_e_hora}.xlsx',key='download_button',label='Download')     
+                output5 = io.BytesIO()
+                with pd.ExcelWriter(output5, engine='xlsxwriter') as writer:
+                    dados_guide.to_excel(writer,sheet_name='Guide', index=False)
+                output5.seek(0)
+                st.download_button(data=output5,file_name=f'GUIDE___{dia_e_hora}.xlsx',key='download_button',label='Download')     
 
-                if st.button(f'Armazenar taxa de gestao GUIDE:   {dia_e_hora}',key='botao_guide'):
-                    try:
-                        registrar_dados_no_Mysql(dados_guide)
-                        st.success('Taxa calculada e registrada!')
-                    except:
-                        st.error('Não foi possivel executar')
-                if st.button(f'Ver tabela Guide:  {dia_e_hora}',key='tabela_guide'):
-                    st.dataframe(dados_guide)
-            except:
-                pass
+            if st.button(f'Armazenar taxa de gestao GUIDE:   {dia_e_hora}',key='botao_guide'):
+                try:
+                    registrar_dados_no_Mysql(dados_guide)
+                    st.success('Taxa calculada e registrada!')
+                except:
+                    st.error('Não foi possivel executar')
+            if st.button(f'Ver tabela Guide:  {dia_e_hora}',key='tabela_guide'):
+                st.dataframe(dados_guide)
+            # except:
+            #     pass
 
 
 
