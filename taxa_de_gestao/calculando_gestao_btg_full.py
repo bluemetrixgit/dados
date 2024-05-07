@@ -47,11 +47,7 @@ class CalculandoTaxadeGestao():
 
         self.planilha_controle['Conta'] = self.planilha_controle['Conta'].astype(str).str[:-2].map(lambda x: '00'+x)
         self.planilha_controle = self.planilha_controle[['Conta','Taxa de Gestão']]
-        self.planilha_controle = self.planilha_controle[self.planilha_controle['Conta'] == '00827730']
-        self.pl = self.pl[self.pl['Conta']== '00827730']
 
-        st.dataframe(self.planilha_controle)
-        st.dataframe(self.pl)
         self.planilha_controle.rename(columns={'Taxa de Gestão':'Taxa_de_Gestão','Conta':'conta'},inplace=True)
         tx_gestao = pd.merge(self.planilha_controle,self.pl, left_on='conta',right_on='Conta',how='outer')
         tx_gestao = tx_gestao[['conta','Taxa_de_Gestão','Valor']].rename(columns={'Valor':'VALOR'})
@@ -113,7 +109,8 @@ class CalculandoTaxadeGestao():
                 st.write(f'Faltando arquivos:{e}')
             
 
-        self.planilha_controle = self.planilha_controle[['Nome','Conta','Taxa de Gestão']].iloc[:-5,:]
+        self.planilha_controle = self.planilha_controle[['Cliente','Conta','Taxa de Gestão']].iloc[:-5,:]
+
         self.pl_agora = self.pl_agora.iloc[3:,:]
 
 
@@ -152,17 +149,19 @@ class CalculandoTaxadeGestao():
         tx_gestao= pd.merge(bovespa_vista_data_agregado,tesouro_direto_agregado, on='BLUEMETRIX',how='outer').merge(
             renda_fixa_agregado, on='BLUEMETRIX',how='outer'
         ).merge(garantias_agregado,how='outer',on='BLUEMETRIX')
-
+       
         if 'Nome' in tx_gestao['BLUEMETRIX'].values and 'CPF' in tx_gestao['BLUEMETRIX'].values:
-            # Elimine as linhas que contenham 'Nome' ou 'CPF' nos valores
+            # Elimine as linhas que contenham 'Cliente' ou 'CPF' nos valores
             tx_gestao= tx_gestao[(tx_gestao['BLUEMETRIX'] != 'Nome') & (tx_gestao['BLUEMETRIX'] != 'CPF')]
         else:
-            print("As palavras 'Nome' e 'CPF' não foram encontradas nos valores das linhas.")
+            print("As palavras 'Cliente' e 'CPF' não foram encontradas nos valores das linhas.")
 
         tranformar_colunas_em_numericas = ['Valor_pl','Unnamed: 6','Unnamed: 8','Unnamed: 12']
+
         for coluna in tranformar_colunas_em_numericas:
             tx_gestao[coluna] = tx_gestao[coluna].astype(float)
-        arrumar_nomes = {
+           
+        arrumar_Clientes = {
             'AFRISIO DE SOUZA VIEIRA LIMA FILHO':'Afrisio de Souza Vieira Lima Filho',
             'BRUNO CESAR PESQUERO PONCE JAIME':'Bruno Cesar Pesquero Ponce Jaime ',
             'MARCELO JAIME FERREIRA':'Marcelo Jaime Ferreira',
@@ -172,13 +171,16 @@ class CalculandoTaxadeGestao():
             'SILEDE SATYRO DE SA RIBEIRO':'Silede Satyro de Sá Ribeiro',
             'J & M CONSULTORIA EMPRESARIAL LTDA':'J & M Consultoria Empresarial LTDA  '    
         }
-        tx_gestao['BLUEMETRIX'] = tx_gestao['BLUEMETRIX'].replace(arrumar_nomes)
+        tx_gestao['BLUEMETRIX'] = tx_gestao['BLUEMETRIX'].replace(arrumar_Clientes)
         colunas_numericas = tx_gestao.select_dtypes(include=[np.number])
         tx_gestao['VALOR'] = round(colunas_numericas.sum(axis=1),2)
-        tx_gestao = tx_gestao.iloc[:,[0,-1]].merge(self.planilha_controle,left_on='BLUEMETRIX',right_on='Nome',how='left').rename(columns={
+
+        tx_gestao = tx_gestao.iloc[:,[0,-1]].merge(self.planilha_controle,left_on='BLUEMETRIX',right_on='Cliente',how='left').rename(columns={
             'Taxa de Gestão':'Taxa_de_Gestão',
             'Conta':'conta'
         })
+        
+
 
         calculo_diario = 1/252
         dia_e_hora = datetime.datetime.now().strftime("%Y-%m-%d")
@@ -187,6 +189,7 @@ class CalculandoTaxadeGestao():
         tx_gestao['Tx_Gestão_Diaria'] = ((tx_gestao['Taxa_de_Gestão']+1)**calculo_diario-1)*100
         tx_gestao[f'Valor_de_cobrança'] = round(tx_gestao['VALOR']*(tx_gestao['Tx_Gestão_Diaria'])/100,2)   
         tx_gestao = tx_gestao.iloc[:,[3,4,1,5,6,7]]
+
         return tx_gestao
 
 

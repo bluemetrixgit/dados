@@ -152,28 +152,28 @@ class Taxa_de_gestao_streamlit():
                 type=['xlsx'],
                 key='upload_pl_agora'
             )
-            try:
-                if planilha_de_controle_uploaded and pl_uploaded:
-                    dados_agora = calculadora.calculando_tx_gestao_AGORA(planilha_de_controle_uploaded, pl_uploaded)
-                
-                if st.button(f'Armazenar taxa de gestao Ágora:   {dia_e_hora}',key='botao_agora'):
-                    try:
-                        registrar_dados_no_Mysql(dados_agora)
-                        st.success('Taxa calculada e registrada!')
-                    except:
-                        st.error('Não foi possivel executar')
+            #try:
+            if planilha_de_controle_uploaded and pl_uploaded:
+                dados_agora = calculadora.calculando_tx_gestao_AGORA(planilha_de_controle_uploaded, pl_uploaded)
+            
+            if st.button(f'Armazenar taxa de gestao Ágora:   {dia_e_hora}',key='botao_agora'):
+                try:
+                    registrar_dados_no_Mysql(dados_agora)
+                    st.success('Taxa calculada e registrada!')
+                except:
+                    st.error('Não foi possivel executar')
 
-                if st.button(f'Ver tabela Ágora:  {dia_e_hora}',key='tabela_agora'):
-                    st.dataframe(dados_agora)
-                if dados_agora is not None:
+            if st.button(f'Ver tabela Ágora:  {dia_e_hora}',key='tabela_agora'):
+                st.dataframe(dados_agora)
+            if dados_agora is not None:
 
-                    output2 = io.BytesIO()
-                    with pd.ExcelWriter(output2, engine='xlsxwriter') as writer:
-                        dados_agora.to_excel(writer,sheet_name='Agora', index=False)
-                    output2.seek(0)
-                    st.download_button(data=output2,file_name=f'Agora___{dia_e_hora}.xlsx',key='download_button',label='Download')         
-            except:
-                pass
+                output2 = io.BytesIO()
+                with pd.ExcelWriter(output2, engine='xlsxwriter') as writer:
+                    dados_agora.to_excel(writer,sheet_name='Agora', index=False)
+                output2.seek(0)
+                st.download_button(data=output2,file_name=f'Agora___{dia_e_hora}.xlsx',key='download_button',label='Download')         
+            # except:
+            #     pass
 
         if radio == 'Consulta':
 
