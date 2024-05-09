@@ -120,7 +120,7 @@ class CalculandoTaxadeGestao():
 
         bovespa_vista_start = self.pl_agora[self.pl_agora == 'BOVESPA A VISTA'].index[0]
         bovespa_vista_end = self.pl_agora[self.pl_agora['Gestora'] == 'BOVESPA OPC'].index[0]
-        bovespa_vista_data = self.pl_agora.iloc[bovespa_vista_start :bovespa_vista_end].iloc[:-5]
+        bovespa_vista_data = self.pl_agora.iloc[bovespa_vista_start :bovespa_vista_end].iloc[:-3]
 
         tesouro_direto_start = self.pl_agora[self.pl_agora['Gestora']=='BMF'].index[-1]
         tesouro_direto_end = self.pl_agora[self.pl_agora['Gestora'] == 'FUNDOS'].index[0]
@@ -149,12 +149,15 @@ class CalculandoTaxadeGestao():
         renda_fixa_agregado = renda_fixa_data.groupby('BLUEMETRIX')['Unnamed: 8'].sum().reset_index()
 
         garantias_agregado = garantias_data.groupby('Unnamed: 3')['Unnamed: 12'].sum().reset_index().rename(columns={'Unnamed: 3':'BLUEMETRIX'})
+        
+ 
 
 
         
         tx_gestao= pd.merge(bovespa_vista_data_agregado,tesouro_direto_agregado, on='BLUEMETRIX',how='outer').merge(
             renda_fixa_agregado, on='BLUEMETRIX',how='outer'
         ).merge(garantias_agregado,how='outer',on='BLUEMETRIX')
+
 
         if 'Nome' in tx_gestao['BLUEMETRIX'].values and 'CPF' in tx_gestao['BLUEMETRIX'].values:
             # Elimine as linhas que contenham 'Cliente' ou 'CPF' nos valores
