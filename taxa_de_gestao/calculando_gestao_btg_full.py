@@ -139,7 +139,7 @@ class CalculandoTaxadeGestao():
         garantias_data = self.pl_agora.iloc[garantias_start:garantias_end]
 
         bovespa_vista_data = bovespa_vista_data.iloc[3:,:]
-        st.dataframe(bovespa_vista_data)
+    
         bovespa_vista_data['Valor_pl'] = bovespa_vista_data['Unnamed: 12']*bovespa_vista_data['Unnamed: 13']
 
         bovespa_vista_data_agregado = bovespa_vista_data.groupby('Unnamed: 4')['Valor_pl'].sum().reset_index().rename(columns={'Unnamed: 4':'BLUEMETRIX'})
@@ -149,7 +149,7 @@ class CalculandoTaxadeGestao():
         renda_fixa_agregado = renda_fixa_data.groupby('BLUEMETRIX')['Unnamed: 8'].sum().reset_index()
 
         garantias_agregado = garantias_data.groupby('Unnamed: 3')['Unnamed: 12'].sum().reset_index().rename(columns={'Unnamed: 3':'BLUEMETRIX'})
-        st.dataframe(bovespa_vista_data)
+
 
         
         tx_gestao= pd.merge(bovespa_vista_data_agregado,tesouro_direto_agregado, on='BLUEMETRIX',how='outer').merge(
