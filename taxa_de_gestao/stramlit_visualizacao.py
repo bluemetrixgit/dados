@@ -58,7 +58,7 @@ class Taxa_de_gestao_streamlit():
         calculadora = CalculandoTaxadeGestao()
 
 
-        guias = 'BTG','Guide','Ágora','Consulta'
+        guias = 'BTG','Guide','Ágora','Genial','Consulta'
         radio = st.sidebar.radio('',guias)
 
         if radio == 'BTG':
@@ -174,6 +174,40 @@ class Taxa_de_gestao_streamlit():
                 st.download_button(data=output2,file_name=f'Agora___{dia_e_hora}.xlsx',key='download_button',label='Download')         
             # except:
             #     pass
+        elif radio == 'Genial':
+
+            planilha_de_controle_uploaded = st.sidebar.file_uploader(
+                label='Solte o arquivo de Controle de Contratos',
+                type=['xlsx'],
+                key='upload_planilha_de_controle'
+            )
+
+            pl_uploaded = st.sidebar.file_uploader(
+                label='Solte o arquivo de PL',
+                type=['xlsx'],
+                key='upload_pl'
+            )
+             
+            if planilha_de_controle_uploaded and pl_uploaded:
+                dados_genial = calculadora.gestao_genial(planilha_de_controle_uploaded, pl_uploaded)
+            
+            if st.button(f'Armazenar taxa de gestao Ágora:   {dia_e_hora}',key='botao_agora'):
+                try:
+                    registrar_dados_no_Mysql(dados_genial)
+                    st.success('Taxa calculada e registrada!')
+                except:
+                    st.error('Não foi possivel executar')
+
+            if st.button(f'Ver tabela Ágora:  {dia_e_hora}',key='tabela_agora'):
+                st.dataframe(dados_genial)
+            if dados_genial is not None:
+
+                output2 = io.BytesIO()
+                with pd.ExcelWriter(output2, engine='xlsxwriter') as writer:
+                    dados_genial.to_excel(writer,sheet_name='Genia', index=False)
+                output2.seek(0)
+                st.download_button(data=output2,file_name=f'Genial___{dia_e_hora}.xlsx',key='download_button',label='Download')
+
 
         if radio == 'Consulta':
 

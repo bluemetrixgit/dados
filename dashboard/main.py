@@ -700,7 +700,8 @@ class Dashboard():
             'Agosto/2022', 'Setembro/2022', 'Outubro/2022', 'Novembro/2022',
             'Dezembro/2022', 'Janeiro/2023', 'fereiro/2023', 'Março/2023',
             'Abril/2023', 'Maio/2023', 'junho/2023', 'julho/2023', 'Agosto/2023',
-            'Setembro/2023', 'Outubro/2023','Novembro/2023','Dezembro/2023','Janeiro/2024','Fevereiro/2024','Março/2024'
+            'Setembro/2023', 'Outubro/2023','Novembro/2023','Dezembro/2023','Janeiro/2024',
+            'Fevereiro/2024','Março/2024'
         ]]
 
 
@@ -727,7 +728,8 @@ class Dashboard():
             'Agosto/2022', 'Setembro/2022', 'Outubro/2022', 'Novembro/2022',
             'Dezembro/2022', 'Janeiro/2023', 'fereiro/2023', 'Março/2023',
             'Abril/2023', 'Maio/2023', 'junho/2023', 'julho/2023', 'Agosto/2023',
-            'Setembro/2023', 'Outubro/2023','Novembro/2023','Dezembro/2023','Janeiro/2024','Fevereiro/2024','Março/2024']]
+            'Setembro/2023', 'Outubro/2023','Novembro/2023','Dezembro/2023','Janeiro/2024',
+            'Fevereiro/2024','Março/2024']]
 
         arquivo_final_copia = arquivo_final.copy()
 
@@ -961,11 +963,11 @@ class Dashboard():
                 clientes_por_operador.update_yaxes(range=[0,400])
                 st.plotly_chart(clientes_por_operador,use_container_width=True)
 
-                pl_por_operador = dataframe_filtrado.groupby('Mesa de Operação')['Outubro/2023'].sum().reset_index()
+                pl_por_operador = dataframe_filtrado.groupby('Mesa de Operação')['Março/2024'].sum().reset_index()
                 grafico_pl_por_operador = go.Figure(data=
                                                             [go.Bar(
                                                                 x=pl_por_operador['Mesa de Operação'],
-                                                                    y=pl_por_operador['Outubro/2023'],
+                                                                    y=pl_por_operador['Março/2024'],
                                                                     marker_color=irises_colors,
                                                                     
 
@@ -1079,7 +1081,7 @@ class Dashboard():
                 'julho/2022', 'Agosto/2022', 'Setembro/2022', 'Outubro/2022',
                 'Novembro/2022', 'Dezembro/2022', 'Janeiro/2023', 'fereiro/2023',
                 'Março/2023', 'Abril/2023', 'Maio/2023', 'junho/2023', 'julho/2023',
-                'Agosto/2023', 'Setembro/2023', 'Outubro/2023','Novembro/2023','Dezembro/2023','Janeiro/2024','Fevereiro/2024']
+                'Agosto/2023', 'Setembro/2023', 'Outubro/2023','Novembro/2023','Dezembro/2023','Janeiro/2024','Fevereiro/2024','Março/2024']
                 for colunas in colunas_to_numeric2:
                     arquivo_final_copia[colunas] = pd.to_numeric(arquivo_final_copia[colunas],errors='coerce')
 
@@ -1209,18 +1211,18 @@ class Dashboard():
                 valor_total_resgates = dataframe_filtrado[seletor_periodo_resgates].sum()
                 valor_formato_resgates = "${:,.2f}".format(valor_total_resgates)
                 st.metric(label=seletor_periodo_resgates,value=valor_formato_resgates)
-                dataframe_filtrado['Outubro/2023'] = pd.to_numeric(dataframe_filtrado['Outubro/2023'],errors='coerce')
-                pl_assessores_atual = dataframe_filtrado.groupby('Assessor')['Outubro/2023'].sum().nlargest(10).reset_index()
+                dataframe_filtrado['Março/2024'] = pd.to_numeric(dataframe_filtrado['Março/2024'],errors='coerce')
+                pl_assessores_atual = dataframe_filtrado.groupby('Assessor')['Março/2024'].sum().nlargest(10).reset_index()
 
                 grafico_pl_assessores_atual = go.Figure(data=
                                                     [go.Bar(
                                                         x=pl_assessores_atual['Assessor'],
-                                                        y=pl_assessores_atual['Outubro/2023'],
+                                                        y=pl_assessores_atual['Março/2024'],
                                                         marker_color=Blues,
                                                                         )])
                 grafico_pl_assessores_atual.update_layout(paper_bgcolor='rgba(0,0,0,0)',
                                                      plot_bgcolor='rgba(0,0,0,0)',
-                                                     title=dict(text='Top 10 PL Assessores Outubro/2023',
+                                                     title=dict(text='Top 10 PL Assessores Março/2024',
                                                                 font=dict(size=20),
                                                                 x=0.2,
                                                                 y=0.9),

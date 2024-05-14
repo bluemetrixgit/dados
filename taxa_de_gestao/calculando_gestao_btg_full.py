@@ -203,5 +203,34 @@ class CalculandoTaxadeGestao():
         tx_gestao = tx_gestao.iloc[:,[3,4,1,5,6,7]]
 
         return tx_gestao
+    
+    def gestao_genial(self,uploaded_planilha_de_controle=None,uploaded_pl=None):
+
+    
+
+        if uploaded_planilha_de_controle is not None:
+            try:
+                self.controle_genial = pd.read_excel(uploaded_planilha_de_controle, sheet_name=4, skiprows=1)
+            except Exception as e:
+                st.write(f'Faltando arquivos:{e}')
+
+        if uploaded_pl is not None:
+            try:
+                self.genial_pl = pd.read_excel(uploaded_pl,skiprows=1)
+            except Exception as e:
+                st.write(f'Faltando arquivos:{e}')
+
+        self.controle_genial['Cliente'] = self.controle_genial['Cliente'].str.upper().replace('JOÃO CARMELINO DOS SANTOS FILHO','JOAO CARMELINO DOS SANTOS FILHO').replace(
+            'CLAUDIA PEREIRA BRANDÃO','CLAUDIA PEREIRA BRANDAO').replace('ANA BEATRIZ DUPRÉ SILVA','ANA BEATRIZ DUPRE SILVA').replace(
+                'ANA MÁRCIA IUNE SALLES GAUDARD','ANA MARCIA IUNES SALLES GAUDAR').replace('PEDRO DE ASSUNÇÃO CRUZ','PEDRO DE ASSUNCAO CRUZ')
+
+        calculo_diario = 1/252
+        arquivo_final = pd.merge(self.genial_pl,self.controle_genial,left_on='NOME',right_on='Cliente',how='outer')
+        arquivo_final['Tx_Gestão_Diaria'] = ((arquivo_final['Taxa de Gestão']+1)**calculo_diario-1)*100
+        arquivo_final['Valor_de_cobrança'] = round((arquivo_final['PL Total']*arquivo_final['Tx_Gestão_Diaria'])/100,2)
+        tx_gestao = arquivo_final.groupby(['NOME','Conta'])['Valor_de_cobrança'].sum().reset_index()
+
+    
+        return tx_gestao
 
 
