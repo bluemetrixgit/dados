@@ -191,14 +191,14 @@ class Taxa_de_gestao_streamlit():
             if planilha_de_controle_uploaded and pl_uploaded:
                 dados_genial = calculadora.gestao_genial(planilha_de_controle_uploaded, pl_uploaded)
             
-            if st.button(f'Armazenar taxa de gestao Ágora:   {dia_e_hora}',key='botao_agora'):
+            if st.button(f'Armazenar taxa de gestao Genial:   {dia_e_hora}',key='botao_agora'):
                 try:
                     registrar_dados_no_Mysql(dados_genial)
                     st.success('Taxa calculada e registrada!')
                 except:
                     st.error('Não foi possivel executar')
 
-            if st.button(f'Ver tabela Ágora:  {dia_e_hora}',key='tabela_agora'):
+            if st.button(f'Ver tabela Genial:  {dia_e_hora}',key='tabela_agora'):
                 st.dataframe(dados_genial)
             if dados_genial is not None:
 

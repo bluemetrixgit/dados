@@ -228,7 +228,11 @@ class CalculandoTaxadeGestao():
         arquivo_final = pd.merge(self.genial_pl,self.controle_genial,left_on='NOME',right_on='Cliente',how='outer')
         arquivo_final['Tx_Gestão_Diaria'] = ((arquivo_final['Taxa de Gestão']+1)**calculo_diario-1)*100
         arquivo_final['Valor_de_cobrança'] = round((arquivo_final['PL Total']*arquivo_final['Tx_Gestão_Diaria'])/100,2)
+        
         tx_gestao = arquivo_final.groupby(['NOME','Conta'])['Valor_de_cobrança'].sum().reset_index()
+
+        arquivo_final = arquivo_final.iloc[:,[5,-2,-3]].drop_duplicates().dropna(subset=arquivo_final.columns[-3])
+        tx_gestao = tx_gestao.merge(arquivo_final,on='NOME')
 
     
         return tx_gestao
