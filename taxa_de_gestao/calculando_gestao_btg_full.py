@@ -45,7 +45,7 @@ class CalculandoTaxadeGestao():
         calculo_diario = 1/252
         dia_e_hora = datetime.datetime.now().strftime("%Y-%m-%d")
 
-        self.planilha_controle['Conta'] = self.planilha_controle['Conta']#.astype(str).str[:-2].map(lambda x: '00'+x)
+        self.planilha_controle['Conta'] = self.planilha_controle['Conta'].astype(str).str[:-2].map(lambda x: '00'+x)
         self.planilha_controle = self.planilha_controle[['Conta','Taxa de Gestão']]
         self.planilha_controle.rename(columns={'Taxa de Gestão':'Taxa_de_Gestão','Conta':'conta'},inplace=True)
         tx_gestao = pd.merge(self.planilha_controle,self.pl, left_on='conta',right_on='Conta',how='outer')
