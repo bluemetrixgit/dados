@@ -10,4 +10,4 @@ Um dashboard com três abas que retorna as informações gerais da planilha de c
 **Segunda aba (Taxa de gestão)**
   + Calcula o valor da taxa de gestão 
 **Terceira aba (Enquadramento de contas)**
-+ Identifica os clientes que não estão de acordo com a estratégia.
+  + Identifica os clientes que não estão de acordo com a estratégia.
