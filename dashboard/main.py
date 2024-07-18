@@ -21,13 +21,13 @@ class Dashboard():
             df_dic = pd.read_excel(x,y)
             return df_dic
 
-        btg = le_excel(r'Controle de Contratos.xlsx',2)
-        guide = le_excel(r'Controle de Contratos.xlsx',3)
-        genial = le_excel(r'Controle de Contratos.xlsx',4)
-        agora = le_excel(r'Controle de Contratos.xlsx',5)
-        orama = le_excel(r'Controle de Contratos.xlsx',6)
-        novas = le_excel(r'Controle de Contratos.xlsx',7)
-        co_admin = pd.read_excel(r'Controle de Contratos - Carteiras Co-Administradas.xlsx',1,skiprows=1).iloc[:-5,:]
+        btg = le_excel(r'Controle de Contratos - Junho (1).xlsx',2)
+        guide = le_excel(r'Controle de Contratos - Junho (1).xlsx',3)
+        genial = le_excel(r'Controle de Contratos - Junho (1).xlsx',4)
+        agora = le_excel(r'Controle de Contratos - Junho (1).xlsx',5)
+        orama = le_excel(r'Controle de Contratos - Junho (1).xlsx',6)
+        novas = le_excel(r'Controle de Contratos - Junho (1).xlsx',7)
+        co_admin = pd.read_excel(r'Controle de Contratos - Junho Co-admin.xlsx',1,skiprows=1).iloc[:-5,:]
 
 
         ###########
@@ -40,75 +40,82 @@ class Dashboard():
         for corretora in lista_core0:
             nome_ultima_col = corretora.columns[-1]
 
-            novo_nome = 'Maio/2024'
+            novo_nome = 'Junho/2024'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
+
 
         for corretora in lista_core0:
             nome_ultima_col = corretora.columns[-2]
 
-            novo_nome = 'Abril/2024'
+            novo_nome = 'Maio/2024'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
         for corretora in lista_core0:
             nome_ultima_col = corretora.columns[-3]
 
-            novo_nome = 'Março/2024'
+            novo_nome = 'Abril/2024'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
         for corretora in lista_core0:
             nome_ultima_col = corretora.columns[-4]
 
-            novo_nome = 'Fevereiro/2024'
+            novo_nome = 'Março/2024'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
         for corretora in lista_core0:
             nome_ultima_col = corretora.columns[-5]
+
+            novo_nome = 'Fevereiro/2024'
+            corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
+
+        for corretora in lista_core0:
+            nome_ultima_col = corretora.columns[-6]
 
             novo_nome = 'Janeiro/2024'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core:
-            nome_ultima_col = corretora.columns[-6]
+            nome_ultima_col = corretora.columns[-7]
 
             novo_nome = 'Dezembro/2023'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
         for corretora in lista_core:
-            nome_ultima_col = corretora.columns[-7]
+            nome_ultima_col = corretora.columns[-8]
 
             novo_nome = 'Novembro/2023'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
         for corretora in lista_core:
-            nome_ultima_col = corretora.columns[-8]
+            nome_ultima_col = corretora.columns[-9]
 
             novo_nome = 'Outubro/2023'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core:
-            nome_ultima_col = corretora.columns[-9]
+            nome_ultima_col = corretora.columns[-10]
 
             novo_nome = 'Setembro/2023'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
             lista_core = [btg,guide,genial,agora,orama,novas]
 
         for corretora in lista_core:
-            nome_ultima_col = corretora.columns[-10]
+            nome_ultima_col = corretora.columns[-11]
 
             novo_nome = 'Agosto/2023'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core:
-            nome_ultima_col = corretora.columns[-11]
+            nome_ultima_col = corretora.columns[-12]
 
             novo_nome = 'julho/2023'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core:
-            nome_ultima_col = corretora.columns[-12]
+            nome_ultima_col = corretora.columns[-13]
 
             novo_nome = 'junho/2023'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
@@ -116,14 +123,14 @@ class Dashboard():
 
 
         for corretora in lista_core:
-            nome_ultima_col = corretora.columns[-13]
+            nome_ultima_col = corretora.columns[-14]
 
             novo_nome = 'Maio/2023'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core:
-            nome_ultima_col = corretora.columns[-14]
+            nome_ultima_col = corretora.columns[-15]
 
             novo_nome = 'Abril/2023'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
@@ -131,20 +138,20 @@ class Dashboard():
 
 
         for corretora in lista_core:
-            nome_ultima_col = corretora.columns[-15]
+            nome_ultima_col = corretora.columns[-16]
 
             novo_nome = 'Março/2023'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-16]
+            nome_ultima_col = corretora.columns[-17]
 
             novo_nome = 'fereiro/2023'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-17]
+            nome_ultima_col = corretora.columns[-18]
 
             novo_nome = 'Janeiro/2023'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
@@ -155,49 +162,49 @@ class Dashboard():
         # ##########
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-18]
+            nome_ultima_col = corretora.columns[-19]
 
             novo_nome = 'Dezembro/2022'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-19]
+            nome_ultima_col = corretora.columns[-20]
 
             novo_nome = 'Novembro/2022'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-20]
+            nome_ultima_col = corretora.columns[-21]
 
             novo_nome = 'Outubro/2022'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-21]
+            nome_ultima_col = corretora.columns[-22]
 
             novo_nome = 'Setembro/2022'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-22]
+            nome_ultima_col = corretora.columns[-23]
 
             novo_nome = 'Agosto/2022'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-23]
+            nome_ultima_col = corretora.columns[-24]
 
             novo_nome = 'julho/2022'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-24]
+            nome_ultima_col = corretora.columns[-25]
 
             novo_nome = 'junho/2022'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
@@ -205,21 +212,21 @@ class Dashboard():
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-25]
+            nome_ultima_col = corretora.columns[-26]
 
             novo_nome = 'Maio/2022'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-26]
+            nome_ultima_col = corretora.columns[-27]
 
             novo_nome = 'Abril/2022'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-27]
+            nome_ultima_col = corretora.columns[-28]
 
             novo_nome = 'Março/2022'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
@@ -227,13 +234,13 @@ class Dashboard():
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-28]
+            nome_ultima_col = corretora.columns[-29]
 
             novo_nome = 'fereiro/2022'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-29]
+            nome_ultima_col = corretora.columns[-30]
 
             novo_nome = 'Janeiro/2022'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
@@ -244,49 +251,49 @@ class Dashboard():
         # ##########
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-30]
+            nome_ultima_col = corretora.columns[-31]
 
             novo_nome = 'Dezembro/2021'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-31]
+            nome_ultima_col = corretora.columns[-32]
 
             novo_nome = 'Novembro/2021'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-32]
+            nome_ultima_col = corretora.columns[-33]
 
             novo_nome = 'Outubro/2021'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-33]
+            nome_ultima_col = corretora.columns[-34]
 
             novo_nome = 'Setembro/2021'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-34]
+            nome_ultima_col = corretora.columns[-35]
 
             novo_nome = 'Agosto/2021'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-35]
+            nome_ultima_col = corretora.columns[-36]
 
             novo_nome = 'julho/2021'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-36]
+            nome_ultima_col = corretora.columns[-37]
 
             novo_nome = 'junho/2021'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
@@ -294,34 +301,34 @@ class Dashboard():
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-37]
+            nome_ultima_col = corretora.columns[-38]
 
             novo_nome = 'Maio/2021'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-38]
+            nome_ultima_col = corretora.columns[-39]
 
             novo_nome = 'Abril/2021'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-39]
+            nome_ultima_col = corretora.columns[-40]
 
             novo_nome = 'Março/2021'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-40]
+            nome_ultima_col = corretora.columns[-41]
 
             novo_nome = 'fereiro/2021'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-41]
+            nome_ultima_col = corretora.columns[-42]
 
             novo_nome = 'Janeiro/2021'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
@@ -332,83 +339,83 @@ class Dashboard():
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-42]
+            nome_ultima_col = corretora.columns[-43]
 
             novo_nome = 'Dezembro/2020'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-43]
+            nome_ultima_col = corretora.columns[-44]
 
             novo_nome = 'Novembro/2020'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-44]
+            nome_ultima_col = corretora.columns[-45]
 
             novo_nome = 'Outubro/2020'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-45]
+            nome_ultima_col = corretora.columns[-46]
 
             novo_nome = 'Setembro/2020'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-46]
+            nome_ultima_col = corretora.columns[-47]
 
             novo_nome = 'Agosto/2020'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-47]
+            nome_ultima_col = corretora.columns[-48]
 
             novo_nome = 'julho/2020'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-48]
+            nome_ultima_col = corretora.columns[-49]
 
             novo_nome = 'junho/2020'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-49]
+            nome_ultima_col = corretora.columns[-50]
 
             novo_nome = 'Maio/2020'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-50]
+            nome_ultima_col = corretora.columns[-51]
 
             novo_nome = 'Abril/2020'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-51]
+            nome_ultima_col = corretora.columns[-52]
 
             novo_nome = 'Março/2020'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-52]
+            nome_ultima_col = corretora.columns[-53]
 
             novo_nome = 'fereiro/2020'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
 
         for corretora in lista_core2:
-            nome_ultima_col = corretora.columns[-53]
+            nome_ultima_col = corretora.columns[-54]
 
             novo_nome = 'Janeiro/2020'
             corretora.rename(columns={nome_ultima_col:novo_nome},inplace = True)
@@ -622,7 +629,7 @@ class Dashboard():
                 'Março/2023', 'Abril/2023', 'Maio/2023',
             'junho/2023', 'julho/2023', 'Agosto/2023', 'Setembro/2023',
             'Outubro/2023','Novembro/2023','Dezembro/2023','Janeiro/2024','Fevereiro/2024','Março/2024'
-            ,'Abril/2024','Maio/2024']
+            ,'Abril/2024','Maio/2024','Junho/2024']
 
         arquivo_final = arquivo_final[[
             'Corretora', 'Nome_cliente', 'Conta', 'Escritorio', 'UF', 'Assessor',
@@ -640,7 +647,7 @@ class Dashboard():
                 'Março/2023', 'Abril/2023', 'Maio/2023',
             'junho/2023', 'julho/2023', 'Agosto/2023', 'Setembro/2023',
             'Outubro/2023','Novembro/2023','Dezembro/2023','Janeiro/2024',
-            'Fevereiro/2024','Março/2024','Abril/2024','Maio/2024'
+            'Fevereiro/2024','Março/2024','Abril/2024','Maio/2024','Junho/2024'
         ]]
 
         col_fill_na = meses
@@ -714,7 +721,7 @@ class Dashboard():
             'Dezembro/2022', 'Janeiro/2023', 'fereiro/2023', 'Março/2023',
             'Abril/2023', 'Maio/2023', 'junho/2023', 'julho/2023', 'Agosto/2023',
             'Setembro/2023', 'Outubro/2023','Novembro/2023','Dezembro/2023','Janeiro/2024',
-            'Fevereiro/2024','Março/2024','Abril/2024','Maio/2024'
+            'Fevereiro/2024','Março/2024','Abril/2024','Maio/2024','Junho/2024'
         ]]
 
 
@@ -743,7 +750,7 @@ class Dashboard():
             'Dezembro/2022', 'Janeiro/2023', 'fereiro/2023', 'Março/2023',
             'Abril/2023', 'Maio/2023', 'junho/2023', 'julho/2023', 'Agosto/2023',
             'Setembro/2023', 'Outubro/2023','Novembro/2023','Dezembro/2023','Janeiro/2024',
-            'Fevereiro/2024','Março/2024','Abril/2024','Maio/2024']]
+            'Fevereiro/2024','Março/2024','Abril/2024','Maio/2024','Junho/2024']]
 
         arquivo_final_copia = arquivo_final.copy()
 
@@ -1086,7 +1093,7 @@ class Dashboard():
                 'Novembro/2022', 'Dezembro/2022', 'Janeiro/2023', 'fereiro/2023',
                 'Março/2023', 'Abril/2023', 'Maio/2023', 'junho/2023', 'julho/2023',
                 'Agosto/2023', 'Setembro/2023', 'Outubro/2023','Novembro/2023','Dezembro/2023',
-                'Janeiro/2024','Fevereiro/2024','Março/2024','Abril/2024','Maio/2024']
+                'Janeiro/2024','Fevereiro/2024','Março/2024','Abril/2024','Maio/2024','Junho/2024']
                 for colunas in colunas_to_numeric2:
                     arquivo_final_copia[colunas] = pd.to_numeric(arquivo_final_copia[colunas],errors='coerce')
 
@@ -1216,18 +1223,18 @@ class Dashboard():
                 valor_total_resgates = dataframe_filtrado[seletor_periodo_resgates].sum()
                 valor_formato_resgates = "${:,.2f}".format(valor_total_resgates)
                 st.metric(label=seletor_periodo_resgates,value=valor_formato_resgates)
-                dataframe_filtrado['Maio/2024'] = pd.to_numeric(dataframe_filtrado['Maio/2024'],errors='coerce')
-                pl_assessores_atual = dataframe_filtrado.groupby('Assessor')['Maio/2024'].sum().nlargest(10).reset_index()
+                dataframe_filtrado['Junho/2024'] = pd.to_numeric(dataframe_filtrado['Junho/2024'],errors='coerce')
+                pl_assessores_atual = dataframe_filtrado.groupby('Assessor')['Junho/2024'].sum().nlargest(10).reset_index()
 
                 grafico_pl_assessores_atual = go.Figure(data=
                                                     [go.Bar(
                                                         x=pl_assessores_atual['Assessor'],
-                                                        y=pl_assessores_atual['Maio/2024'],
+                                                        y=pl_assessores_atual['Junho/2024'],
                                                         marker_color=Blues,
                                                                         )])
                 grafico_pl_assessores_atual.update_layout(paper_bgcolor='rgba(0,0,0,0)',
                                                      plot_bgcolor='rgba(0,0,0,0)',
-                                                     title=dict(text='Top 10 PL Assessores Maio/2024',
+                                                     title=dict(text='Top 10 PL Assessores Junho/2024',
                                                                 font=dict(size=20),
                                                                 x=0.2,
                                                                 y=0.9),
