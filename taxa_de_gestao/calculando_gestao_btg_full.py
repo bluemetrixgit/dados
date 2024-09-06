@@ -92,7 +92,6 @@ class CalculandoTaxadeGestao():
         self.guide_pl = self.guide_pl[['CLIE_ID','SALDO_BRUTO']].rename(columns={'CLIE_ID':'Conta','SALDO_BRUTO':'VALOR'})
         self.guide_pl = self.guide_pl.groupby('Conta')['VALOR'].sum().reset_index()
         self.guide_pl['Conta'] = self.guide_pl['Conta'].astype(str)
-        self.planilha_controle['Conta'] = self.planilha_controle['Conta'].str[:-1]
         tx_gestao = pd.merge(self.planilha_controle,self.guide_pl,on='Conta',how='outer').dropna().rename(columns={'Conta':'conta',
                                                                                                          'Taxa de Gestão':'Taxa_de_Gestão'}).reset_index(drop='index')
         selecionar_data = st.date_input('Data')
