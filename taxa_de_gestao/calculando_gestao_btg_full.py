@@ -30,7 +30,7 @@ class CalculandoTaxadeGestao():
 
         if uploaded_planilha_de_controle is not None:
             try:
-                self.planilha_controle = pd.read_excel(uploaded_planilha_de_controle, sheet_name=2, skiprows=1)
+                self.planilha_controle = pd.read_excel(uploaded_planilha_de_controle, sheet_name=1, skiprows=1)
             except Exception as e:
                 st.write(f'Faltando arquivos:{e}')
 
@@ -73,7 +73,7 @@ class CalculandoTaxadeGestao():
                 
         if uploaded_planilha_de_controle is not None:
             try:
-                self.planilha_controle = pd.read_excel(uploaded_planilha_de_controle, sheet_name=3, skiprows=1)
+                self.planilha_controle = pd.read_excel(uploaded_planilha_de_controle, sheet_name=2, skiprows=1)
             except Exception as e:
                 st.write(f'Faltando arquivos:{e}')
 
