@@ -218,7 +218,7 @@ class CalculandoTaxadeGestao():
 
         if uploaded_planilha_de_controle is not None:
             try:
-                self.controle_genial = pd.read_excel(uploaded_planilha_de_controle, sheet_name=4, skiprows=1)
+                self.controle_genial = pd.read_excel(uploaded_planilha_de_controle, sheet_name="Genial", skiprows=1)
             except Exception as e:
                 st.write(f'Faltando arquivos:{e}')
 
